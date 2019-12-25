@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Props-Event</title>
+</head>
+<body>
+    <div id="counter">
+        <div v-for="item in items" :key="item.name">
+            {{item.name}}:{{item.counter}} -> <counter-button @increment="incrementTotal()" @decrement="decrementTotal()" :item="item"></counter-button>
+        </div>
+        <h1>Total:{{total}}</h1>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+    Vue.component('counter-button',{
+        template: '<span><button @click="increment()">+</button><button @click="decrement()">-</button></span>',
+        props: {
+            item:{
+                type: Object
+            }
+        },
+        methods: {
+            increment(){
+                this.item.counter++
+                this.$emit('increment')
+            },
+            decrement(){
+                this.item.counter--
+                this.$emit('decrement')
+            }
+        },
+    })
+
+    new Vue({
+        el: '#counter',
+        data: {
+            total: 0,
+            items: [
+                {
+                    name: 'item-1',
+                    counter: 0
+                },
+                {
+                    name: 'item-2',
+                    counter: 0
+                },
+                {
+                    name: 'item-3',
+                    counter: 0
+                },
+                {
+                    name: 'item-4',
+                    counter: 0
+                },
+                {
+                    name: 'item-5',
+                    counter: 0
+                },
+            ]
+        },
+        methods: {
+            incrementTotal () {
+                this.total++
+            },
+            decrementTotal () {
+                this.total--
+            }
+        }
+    })
+    </script>
+</body>
+</html>
