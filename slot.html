@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slot sample</title>
+</head>
+<body>
+    <div id="page">
+        <!--
+            ↓の方法で　No title. と出ると思ったが
+            マスタッシュの中身なしでは無理っぽい
+            結局ｖ-if？
+        -->
+        <page-header><h1 slot="header">{{title}}</h1></page-header>
+        <item-list>
+            <li v-for="item in items" :key="item.name" slot="list">{{item.name}}</li>
+        </item-list>
+    </div>
+    <div id="page2">
+        <page-header><h1 slot="header">{{title}}</h1></page-header>
+        <item-list>
+            <li v-for="item in items" :key="item.name" slot="list">{{item.name}}</li>
+        </item-list>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+    Vue.component('page-header',{
+        template: '<div><slot name="header">No title.</slot></div>',
+    })
+
+    Vue.component('item-list', {
+        template: '<div><ul><slot name="list">No items.</slot></ul></div>',
+    })
+    new Vue({
+        el: '#page',
+        data: {
+            title: '',
+            items: []
+        },
+    })
+    new Vue({
+        el: '#page2',
+        data: {
+            title: 'title',
+            items: [
+                {
+                    name: 'item-1',
+                },
+                {
+                    name: 'item-2',
+                },
+                {
+                    name: 'item-3',
+                },
+                {
+                    name: 'item-4',
+                },
+                {
+                    name: 'item-5',
+                },
+            ]
+        },
+    })
+    </script>
+</body>
+</html>
